@@ -1,0 +1,32 @@
+.header {
+    padding-left: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 32px;
+    height: 36px;
+    background: #222;
+}
+
+.logo {
+    background: #ff7f7f;
+    height: 35px;
+}
+
+.login {
+    float: right;
+    vertical-align: middle;
+}
+
+.logout {
+    float: right;
+}
+
+.bookShow {
+    float: right;
+    vertical-align: middle;
+}
+
+.modal {
+    align-content: center;
+    size-adjust: 50px;
+}
