@@ -1,0 +1,17 @@
+.header-div  {
+  width: 100%;
+  height: 36px;
+  background-color: #222;
+  padding: 8px 32px 16px 8px;
+}
+
+.logo-container {
+  height:  35px;
+}
+
+.login-container {
+  display: inline;
+  padding: 8px 32px 16px 8px;
+  float: right;
+  
+}
