@@ -31,7 +31,7 @@ const LoginFom = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const loginUSer = () => {
+  const loginUSer = (data) => {
     fetch("http://localhost:8085/api/v1/auth/login", {
       method: "POST",
       headers: {
@@ -48,13 +48,14 @@ const LoginFom = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    // handle login form submission
+    // handle login form submission;
+    const data = {};
     const formData = new FormData(event.target);
     for (let [name, value] of formData.entries()) {
       data[name] = value;
     }
     console.log(data);
-    loginUSer();
+    loginUSer(data);
   };
 
   return (

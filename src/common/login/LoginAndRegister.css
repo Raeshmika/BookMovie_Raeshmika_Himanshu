@@ -1,16 +1,7 @@
-.ReactModal__Content  {
-    position: absolute;
-    inset: 40px;
-    border: 1px solid rgb(204, 204, 204);
-    background: rgb(255, 255, 255);
-    overflow: auto;
-    border-radius: 4px;
-    outline: none;
-    padding: 20px;
-    width: 400px;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    top: 233px;
-    left: 500px;
+.custom-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-style: ridge;
 }
