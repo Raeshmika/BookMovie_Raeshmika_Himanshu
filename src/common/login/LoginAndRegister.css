@@ -3,5 +3,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-style: ridge;
+  background-color: #fff; /* set the background color to white */
+  border: 1px solid #ccc;
+  outline: none;
+  padding: 20px;
+}
+.custom-modal .ReactModal__Content {
+  background-color: #fff !important;
 }

@@ -5,6 +5,7 @@ import logo from "../../assets/logo.svg";
 import Login from "../login/Login";
 import { store } from "../reducer/rootReducer";
 import { useSelector } from "react-redux";
+import Logout from "../login/Logout";
 
 export const Header = () => {
   const loginDetails = useSelector((state) => state.loginReducer.logigDetails);
@@ -13,6 +14,7 @@ export const Header = () => {
       <div className="header-div">
         <img src={logo} alt="Your SVG" className="logo-container" />
         <div className="login-container">{!loginDetails && <Login />}</div>
+        <div className="login-coontainer">{loginDetails && <Logout />}</div>
       </div>
     </Provider>
   );
