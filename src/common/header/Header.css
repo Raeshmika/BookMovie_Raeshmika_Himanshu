@@ -5,8 +5,19 @@
   padding: 8px 32px 16px 8px;
 }
 
-.logo-container {
-  height:  35px;
+.app-logo{
+  animation: app-logo-spin infinite 8s linear;
+  height:35px;
+  background: #ff7f7f;
+}
+
+@keyframes app-logo-spin{
+  from { transform: scaleX(-1);}
+}
+
+.logo {
+  background: #ff7f7f;
+  height: 35px;
 }
 
 .login-container {

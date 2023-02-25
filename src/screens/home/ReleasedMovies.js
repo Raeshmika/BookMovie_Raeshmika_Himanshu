@@ -1,7 +1,7 @@
 import React from "react";
 import { GridList, GridListTile, GridListTileBar } from "@material-ui/core";
 import "./Home.css";
-//import MovieFilterCard from "./MovieFilterCard";
+import MovieFilterCard from "./MovieFilterCard";
 
 const releasedMovies = {
   page: 2,
@@ -222,7 +222,9 @@ const ReleasedMovies = () => {
           ))}
         </GridList>
       </div>
-      <div className="filter-movies">hello</div>
+      <div className="filter-movies">
+         <MovieFilterCard />
+      </div>
     </div>
   );
 };
