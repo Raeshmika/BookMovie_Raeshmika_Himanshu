@@ -146,7 +146,6 @@ const ReleasedMovies = (props) => {
     filteredData
       .then((res) => res.json())
       .then((d) => {
-        console.log(d);
         setMovies(d.movies);
       }, []);
   };
@@ -196,7 +195,7 @@ const ReleasedMovies = (props) => {
               <InputLabel htmlFor="select-multiple-checkbox"> Genre</InputLabel>
               <Select
                 multiple
-                input={<Input id="select-multiple-checkbox" />}
+                input={<Input id="select-multiple-checkbox-genres" />}
                 renderValue={(selected) => selected.join(",")}
                 value={genresList}
                 onChange={handleGenreChange}
@@ -217,7 +216,7 @@ const ReleasedMovies = (props) => {
               </InputLabel>
               <Select
                 multiple
-                input={<Input id="select-multiple-checkbox" />}
+                input={<Input id="select-multiple-checkbox-artist" />}
                 renderValue={(selected) => selected.join(",")}
                 value={artistsList}
                 onChange={handleArtistChange}

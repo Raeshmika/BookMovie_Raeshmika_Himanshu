@@ -180,7 +180,6 @@ const RegistrationForm = (props) => {
           variant="contained"
           color="primary"
           onClick={() => {
-            console.log(registrationSuccess);
             if (registrationSuccess) {
               setSuccessMsg("Registration Successful. Please Login!");
             }

@@ -48,8 +48,8 @@ const LoginFom = (props) => {
       .then((res) => {
         dispatch({ type: "SET_LOGIN_DATA", paylod: res.json() });
         history.push("/");
-        if(!res.ok){
-          setLoginSuccess(false)
+        if (!res.ok) {
+          setLoginSuccess(false);
           setSuccessMsg("Incorrect Username Or Password!");
         }
       })
@@ -65,9 +65,9 @@ const LoginFom = (props) => {
           ) {
             dispatch({ type: "SET_LOGIN_DATA", payload: user });
             history.push("/");
-            setLoginSuccess(true)
+            setLoginSuccess(true);
           } else {
-            setLoginSuccess(false)
+            setLoginSuccess(false);
             setSuccessMsg("Incorrect Username Or Password!");
           }
         });
@@ -87,33 +87,33 @@ const LoginFom = (props) => {
 
   return (
     <div>
-    <form onSubmit={handleLogin}>
-      <FormControl className={classes.formControl}>
-        <TextField
-          label="Username"
-          variant="standard"
-          required
-          name="username"
-        />
-      </FormControl>
-      <FormControl className={classes.formControl}>
-        <TextField
-          label="Password"
-          type="password"
-          variant="standard"
-          required
-          name="password"
-        />
-      </FormControl>
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        className={classes.button}
-      >
-        Login
-      </Button>
-    </form>
+      <form onSubmit={handleLogin}>
+        <FormControl className={classes.formControl}>
+          <TextField
+            label="Username"
+            variant="standard"
+            required
+            name="username"
+          />
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <TextField
+            label="Password"
+            type="password"
+            variant="standard"
+            required
+            name="password"
+          />
+        </FormControl>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          className={classes.button}
+        >
+          Login
+        </Button>
+      </form>
       {!loginSuccess && <div>{successMsg}</div>}
     </div>
   );

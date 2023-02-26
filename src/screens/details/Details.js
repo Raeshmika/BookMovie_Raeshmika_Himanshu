@@ -1,7 +1,7 @@
 import {
   ImageList,
-  GridListTile,
-  GridListTileBar,
+  ImageListItem,
+  ImageListItemBar,
   Typography,
 } from "@material-ui/core";
 import React, { useEffect } from "react";
@@ -169,7 +169,7 @@ const Details = (props) => {
             <ImageList rowHeight={160} cols={2}>
               {movie.artists != null &&
                 movie.artists.map((artist) => (
-                  <GridListTile
+                  <ImageListItem
                     className="gridTile"
                     onClick={() => artistClickHandler(artist.wiki_url)}
                     key={artist.id}
@@ -178,10 +178,10 @@ const Details = (props) => {
                       src={artist.profile_url}
                       alt={artist.first_name + " " + artist.last_name}
                     />
-                    <GridListTileBar
+                    <ImageListItemBar
                       title={artist.first_name + " " + artist.last_name}
                     />
-                  </GridListTile>
+                  </ImageListItem>
                 ))}
             </ImageList>
           </div>
