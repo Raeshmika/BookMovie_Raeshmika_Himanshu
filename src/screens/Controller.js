@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "../screens/home/Home";
+import Home from "./home/Home";
 import Details from "../screens/details/Details";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import BookShow from "../screens/bookshow/BookShow";

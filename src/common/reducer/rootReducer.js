@@ -2,16 +2,14 @@
 import { createStore } from "redux";
 import { combineReducers } from "redux";
 import { loginReducer } from "../login/LoginAndRegisterStore";
+import { homeReducer } from "../../screens/home/HomeReducer";
+import { commonReducer } from "./CommonReducer";
 
 const rootReducer = combineReducers({
-  loginReducer,
+  login: loginReducer,
+  home: homeReducer,
+  common: commonReducer,
 });
-
-//   export const store = configureStore({
-//     reducer: {
-//         rootReducer: rootReducer,
-//     }
-//   })
 
 export const store = createStore(
   rootReducer,

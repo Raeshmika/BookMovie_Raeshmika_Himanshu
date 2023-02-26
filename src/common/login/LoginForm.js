@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, FormControl } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -30,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
 const LoginFom = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const history = useHistory();
+  const registeredUsers = useSelector((state) => state.login.registeredUsers);
 
   const loginUSer = (data) => {
     fetch("http://localhost:8085/api/v1/auth/login", {
@@ -41,9 +44,20 @@ const LoginFom = () => {
     })
       .then((res) => {
         dispatch({ type: "SET_LOGIN_DATA", paylod: res.json() });
-        window.location.href = "/";
+        history.push("/");
       })
-      .catch((err) => console.log(`Error Occured! ${err.message}`));
+      .catch((err) => {
+        console.log(`Error Occured! ${err.message}`);
+        registeredUsers.map((user) => {
+          if (
+            user.username === data["username"] &&
+            user.password === data["password"]
+          ) {
+            dispatch({ type: "SET_LOGIN_DATA", payload: user });
+            history.push("/");
+          }
+        });
+      });
   };
 
   const handleLogin = (event) => {

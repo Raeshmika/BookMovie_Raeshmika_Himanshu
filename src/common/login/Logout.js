@@ -5,7 +5,6 @@ import LoginAndRegisterModal from "./LoginAndRegisterModal";
 
 const Logout = () => {
   const dispatch = useDispatch();
-  const openModal = useSelector((state) => state.openModal);
 
   return (
     <Fragment>

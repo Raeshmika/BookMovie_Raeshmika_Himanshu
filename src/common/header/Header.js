@@ -6,21 +6,27 @@ import Login from "../login/Login";
 import { store } from "../reducer/rootReducer";
 import { useSelector } from "react-redux";
 import Logout from "../login/Logout";
-import Bookshow from "../bookshow/Bookshow";
 import BookshowLink from "../bookshow/BookshowLink";
+import { useState } from "react";
 
-export const Header = () => {
-  const loginDetails = useSelector((state) => state.loginReducer.logigDetails);
-  const [showBookShowButton,setBookShowButton] = useState(true);
-  const id  = "";
+export const Header = (props) => {
+  const loginDetails = useSelector((state) => state.login.loginDetails);
+  const showBookShowButton = useSelector(
+    (state) => state.common.showBookShowButton
+  );
   return (
     <Provider store={store}>
       <div className="header-div">
-        <img src={logo} className='app-logo' alt='logo'></img>
-        <div className="login-container">{!loginDetails && <Login />}</div>
-        <div className="login-coontainer">{loginDetails && <Logout />}</div>
-        <div className="login-container">{ showBookShowButton && loginDetails ? <Bookshow /> : ""}</div>
-        <div className="login-container">{ showBookShowButton && !loginDetails ? <BookshowLink {...props} id={id}/> : ""}</div>
+        <img src={logo} className="app-logo" alt="logo"></img>
+        <div className="login-container">
+          {JSON.stringify(loginDetails) === "{}" && <Login />}
+        </div>
+        <div className="login-container">
+          {JSON.stringify(loginDetails) !== "{}" && <Logout />}
+        </div>
+        <div className="login-container">
+          {showBookShowButton && <BookshowLink {...props} />}
+        </div>
       </div>
     </Provider>
   );

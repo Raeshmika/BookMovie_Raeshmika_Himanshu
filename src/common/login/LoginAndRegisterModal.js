@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginAndRegisterModal = () => {
   const dispatch = useDispatch();
-  const openModal = useSelector((state) => state.loginReducer.openModal);
+  const openModal = useSelector((state) => state.login.openModal);
 
   const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
