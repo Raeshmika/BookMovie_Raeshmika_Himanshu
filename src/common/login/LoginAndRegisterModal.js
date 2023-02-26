@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 const LoginAndRegisterModal = (props) => {
   const dispatch = useDispatch();
   const openModal = useSelector((state) => state.login.openModal);
-
   const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -26,7 +25,6 @@ const LoginAndRegisterModal = (props) => {
 
   const onRequestClose = () => {
     dispatch({ type: "OPEN_CLOSE_MODAL", payload: false });
-    setSuccessMsg("");
   };
 
   return (

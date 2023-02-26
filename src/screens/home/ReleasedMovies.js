@@ -1,8 +1,8 @@
 import React from "react";
 import {
   ImageList,
-  GridListTile,
-  GridListTileBar,
+  ImageListItem,
+  ImageListItemBar,
   Card,
   CardContent,
   Typography,
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     minWidth: 240,
     maxWidth: 240,
-    margin: theme.spacing.unit,
+    margin: theme.spacing(2),
   },
   heading: {
     color: theme.palette.primary.light,
@@ -39,15 +39,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   formControl: {
     minWidth: 240,
     maxWidth: 240,
-    margin: theme.spacing.unit,
+    margin: theme.spacing(2),
   },
   button: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -157,24 +157,26 @@ const ReleasedMovies = (props) => {
   };
   return (
     <div className="flex-container">
-      <div className="released-movies-container">
-        <ImageList rowHeight="350px" cols={4}>
+      <div className="left">
+        <ImageList rowHeight={350} cols={4} className={props.gridListMain}>
           {movies.map((movie) => (
-            <Link to={`/movie/${movie.id}`}>
-              <GridListTile
+            <Link to={`/movie/${movie.id}`} key={movie.id}>
+              <ImageListItem
                 key={movie.id}
                 cols={1}
                 min-width="350"
                 onClick={() => movieClickHandler(movie.id)}
               >
                 <img src={movie.poster_url} alt={movie.title} />
-                <GridListTileBar title={movie.title} />
-              </GridListTile>
+                <ImageListItemBar title={movie.title} 
+                  subtitle={<span>Release Date: {new Date(movie.release_date).toDateString()}</span>}
+                />
+              </ImageListItem>
             </Link>
           ))}
         </ImageList>
       </div>
-      <div className="filter-movies">
+      <div className="right">
         <Card>
           <CardContent>
             <FormControl>
@@ -208,7 +210,6 @@ const ReleasedMovies = (props) => {
             <br />
             <FormControl>
               <InputLabel htmlFor="select-multiple-checkbox">
-                {" "}
                 Artists
               </InputLabel>
               <Select

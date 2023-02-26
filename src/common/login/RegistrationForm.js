@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Button, FormControl } from "@material-ui/core";
+import { TextField, Button, FormControl,FormHelperText,Input,
+  InputLabel,
+  Tab,
+  Tabs,
+  Typography, } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -29,30 +34,76 @@ const useStyles = makeStyles((theme) => ({
 
 const RegistrationForm = (props) => {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   const [successMsg, setSuccessMsg] = useState("");
+  const [firstnameRequired, setFirstnameRequired] = useState("dispNone");
+  const [firstname, setFirstname] = useState("");
+  const [lastnameRequired, setLastnameRequired] = useState("dispNone");
+  const [lastname, setLastname] = useState("");
+  const [emailRequired, setEmailRequired] = useState("dispNone");
+  const [registerPasswordRequired, setRegisterPasswordRequired] =
+    useState("dispNone");
+  const [contactRequired, setContactRequired] = useState("dispNone");
 
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
+  const registeredUsers = useSelector((state) => state.login.registeredUsers);
+  const tempUser = [{}]
   async function registerUser(params) {
     try {
-      const response = await fetch("http://localhost:8085/api/v1/signup", {
-        body: JSON.stringify(params),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      });
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      } else {
-        setSuccessMsg("Registration Successful. Please Login!");
-      }
+      
+        params.firstname === ""
+          ? setFirstnameRequired("dispBlock")
+          : setFirstnameRequired("dispNone");
+  
+        params.lastname === ""
+          ? setLastnameRequired("dispBlock")
+          : setLastnameRequired("dispNone");
+  
+        params.email_address === ""
+          ? setEmailRequired("dispBlock")
+          : setEmailRequired("dispNone");
+        params.password === ""
+          ? setRegisterPasswordRequired("dispBlock")
+          : setRegisterPasswordRequired("dispNone");
+        params.mobile_number === ""
+          ? setContactRequired("dispBlock")
+          : setContactRequired("dispNone");
+        if (params.email_address!=="" && params.firstname!=="" && params.lastname!=="" && params.mobile_number!=="" && params.password!=="") {
+          const dataSignup = JSON.stringify(params);  
+          const response = await fetch("http://localhost:8085/api/v1/signup", {
+             body: dataSignup,
+             method: "POST",
+             headers: {
+               "Content-Type": "application/json;charset=UTF-8",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+             },
+          });
+         const result = await response.json();
+         if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+         } else {
+           setSuccessMsg("Registration Successful. Please Login!");
+           setRegistrationSuccess(true)
+         }
+    }
     } catch (e) {
       console.error(e);
-      setSuccessMsg("Registration Successful. Please Login!");
+      /**
+         * This is a work around added to imitate the register functionality which is currently not working due to CORS error
+         */
+      
+      tempUser.map((user) => {
+       
+          user.username = params.email_address;
+          user.password = params.password;
+          registeredUsers.push(tempUser);
+          dispatch({ type: "ADD_REGISTERED_USERS", payload: registeredUsers });
+        });
+        setSuccessMsg("Registration Successful. Please Login!");
+        setRegistrationSuccess(true)
+        console.log(registeredUsers)
     }
   }
 
@@ -64,13 +115,12 @@ const RegistrationForm = (props) => {
     for (let [name, value] of formData.entries()) {
       data[name] = value;
     }
-    console.log(data);
     registerUser(data);
   };
   return (
     <div>
       <form onSubmit={handleRegister}>
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} required>
           <TextField
             label="First name"
             variant="standard"
@@ -80,38 +130,42 @@ const RegistrationForm = (props) => {
             name="first_name"
           />
         </FormControl>
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} required>
           <TextField
             label="Last name"
             variant="standard"
             required
+            helperText="required"
             name="last_name"
           />
         </FormControl>
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} required>
           <TextField
             label="Email"
             type="email"
             variant="standard"
             required
+            helperText="required"
             name="email_address"
           />
         </FormControl>
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} required>
           <TextField
             label="Password"
             type="password"
             variant="standard"
             required
+            helperText="required"
             name="password"
           />
         </FormControl>
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} required>
           <TextField
             label="Contact no"
             type="tel"
             variant="standard"
             required
+            helperText="required"
             name="mobile_number"
           />
         </FormControl>
@@ -119,13 +173,19 @@ const RegistrationForm = (props) => {
           type="submit"
           variant="contained"
           color="primary"
+          onClick={()=>{
+            console.log(registrationSuccess)
+            if(registrationSuccess){
+              setSuccessMsg("Registration Successful. Please Login!");
+            }
+          }}
           className={classes.button}
         >
           Register
         </Button>
       </form>
 
-      {successMsg && <div>{successMsg}</div>}
+      {registrationSuccess && <div>{successMsg}</div>}
     </div>
   );
 };

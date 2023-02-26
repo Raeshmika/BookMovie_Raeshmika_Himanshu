@@ -11,3 +11,7 @@
 .custom-modal .ReactModal__Content {
   background-color: #fff !important;
 }
+
+.red {
+  color: red;
+}

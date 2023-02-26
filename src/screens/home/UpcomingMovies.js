@@ -1,6 +1,25 @@
 import React from "react";
-import { ImageList, GridListTile, GridListTileBar } from "@material-ui/core";
+import { ImageList, ImageListItem, ImageListItemBar } from "@material-ui/core";
 import { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+  upcomingMoviesHeading: {
+    textAlign: "center",
+    background: "#ff9999",
+    padding: "8px",
+    fontSize: "1rem",
+  },
+  gridListUpcomingMovies: {
+    flexWrap: "nowrap",
+    transform: "translateZ(0)",
+    width: "100%",
+  },
+}));
 
 const UpcomingMovies = (props) => {
   const [movies, setMovies] = useState([]);
@@ -18,14 +37,15 @@ const UpcomingMovies = (props) => {
     };
     fetchData();
   }, []);
+  const classes = useStyles();
   return (
     <div>
-      <ImageList rowHeight={250} cols={6} style={{ flexWrap: "nowrap" }}>
+      <ImageList rowHeight={250} cols={6} style={{ flexWrap: "nowrap" }} className={classes.gridListUpcomingMovies}>
         {movies.map((movie) => (
-          <GridListTile key={movie.id} cols={1} min-width="250px">
+          <ImageListItem key={"upcoming" + movie.id}>
             <img src={movie.poster_url} alt={movie.title} />
-            <GridListTileBar title={movie.title} />
-          </GridListTile>
+            <ImageListItemBar title={movie.title} />
+          </ImageListItem>
         ))}
       </ImageList>
     </div>
