@@ -59,5 +59,13 @@ display:flex;
       margin:8px;
   }
 
+}
 
+  .grid-item {
+      margin: 15px;
+  }
+
+.movie-img {
+  height: 100%;
+  width: auto;
 }

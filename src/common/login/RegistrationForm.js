@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Button, FormControl,FormHelperText,Input,
+import {
+  TextField,
+  Button,
+  FormControl,
+  FormHelperText,
+  Input,
   InputLabel,
   Tab,
   Tabs,
-  Typography, } from "@material-ui/core";
+  Typography,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -48,62 +54,62 @@ const RegistrationForm = (props) => {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
   const registeredUsers = useSelector((state) => state.login.registeredUsers);
-  const tempUser = [{}]
   async function registerUser(params) {
     try {
-      
-        params.firstname === ""
-          ? setFirstnameRequired("dispBlock")
-          : setFirstnameRequired("dispNone");
-  
-        params.lastname === ""
-          ? setLastnameRequired("dispBlock")
-          : setLastnameRequired("dispNone");
-  
-        params.email_address === ""
-          ? setEmailRequired("dispBlock")
-          : setEmailRequired("dispNone");
-        params.password === ""
-          ? setRegisterPasswordRequired("dispBlock")
-          : setRegisterPasswordRequired("dispNone");
-        params.mobile_number === ""
-          ? setContactRequired("dispBlock")
-          : setContactRequired("dispNone");
-        if (params.email_address!=="" && params.firstname!=="" && params.lastname!=="" && params.mobile_number!=="" && params.password!=="") {
-          const dataSignup = JSON.stringify(params);  
-          const response = await fetch("http://localhost:8085/api/v1/signup", {
-             body: dataSignup,
-             method: "POST",
-             headers: {
-               "Content-Type": "application/json;charset=UTF-8",
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "*",
-             },
-          });
-         const result = await response.json();
-         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-         } else {
-           setSuccessMsg("Registration Successful. Please Login!");
-           setRegistrationSuccess(true)
-         }
-    }
+      params.firstname === ""
+        ? setFirstnameRequired("dispBlock")
+        : setFirstnameRequired("dispNone");
+
+      params.lastname === ""
+        ? setLastnameRequired("dispBlock")
+        : setLastnameRequired("dispNone");
+
+      params.email_address === ""
+        ? setEmailRequired("dispBlock")
+        : setEmailRequired("dispNone");
+      params.password === ""
+        ? setRegisterPasswordRequired("dispBlock")
+        : setRegisterPasswordRequired("dispNone");
+      params.mobile_number === ""
+        ? setContactRequired("dispBlock")
+        : setContactRequired("dispNone");
+      if (
+        params.email_address !== "" &&
+        params.firstname !== "" &&
+        params.lastname !== "" &&
+        params.mobile_number !== "" &&
+        params.password !== ""
+      ) {
+        const dataSignup = JSON.stringify(params);
+        const response = await fetch("http://localhost:8085/api/v1/signup", {
+          body: dataSignup,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        } else {
+          setSuccessMsg("Registration Successful. Please Login!");
+          setRegistrationSuccess(true);
+        }
+      }
     } catch (e) {
       console.error(e);
       /**
-         * This is a work around added to imitate the register functionality which is currently not working due to CORS error
-         */
-      
-      tempUser.map((user) => {
-       
-          user.username = params.email_address;
-          user.password = params.password;
-          registeredUsers.push(tempUser);
-          dispatch({ type: "ADD_REGISTERED_USERS", payload: registeredUsers });
-        });
-        setSuccessMsg("Registration Successful. Please Login!");
-        setRegistrationSuccess(true)
-        console.log(registeredUsers)
+       * This is a work around added to imitate the register functionality which is currently not working due to CORS error
+       */
+      const newUser = {
+        username: params.email_address,
+        password: params.password,
+      };
+      dispatch({ type: "ADD_REGISTERED_USERS", payload: newUser });
+      setSuccessMsg("Registration Successful. Please Login!");
+      setRegistrationSuccess(true);
     }
   }
 
@@ -173,9 +179,9 @@ const RegistrationForm = (props) => {
           type="submit"
           variant="contained"
           color="primary"
-          onClick={()=>{
-            console.log(registrationSuccess)
-            if(registrationSuccess){
+          onClick={() => {
+            console.log(registrationSuccess);
+            if (registrationSuccess) {
               setSuccessMsg("Registration Successful. Please Login!");
             }
           }}

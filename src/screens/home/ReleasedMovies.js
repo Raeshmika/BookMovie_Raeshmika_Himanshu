@@ -24,30 +24,27 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    minWidth: 240,
-    maxWidth: 240,
-    margin: theme.spacing(2),
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
   },
   heading: {
     color: theme.palette.primary.light,
     fontWeight: "bold",
     textTransform: "uppercase",
   },
-  content: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    padding: theme.spacing(2),
-  },
+
   formControl: {
+    //margin: theme.spacing.unit,
     minWidth: 240,
     maxWidth: 240,
-    margin: theme.spacing(2),
   },
   button: {
     marginTop: theme.spacing(2),
+  },
+  gridListMain: {
+    transform: "translateZ(0)",
+    cursor: "pointer",
   },
 }));
 
@@ -98,8 +95,6 @@ const ReleasedMovies = (props) => {
   const [movieName, setMovieName] = useState("");
   const [genresList, setGenresList] = useState([]);
   const [artistsList, setartistsList] = useState([]);
-
-  const dispatch = useDispatch();
 
   const [releaseDateStart, setReleaseDateStart] = useState("");
   const [releaseDateEnd, setReleaseDateEnd] = useState("");
@@ -158,38 +153,46 @@ const ReleasedMovies = (props) => {
   return (
     <div className="flex-container">
       <div className="left">
-        <ImageList rowHeight={350} cols={4} className={props.gridListMain}>
+        <ImageList rowHeight={350} cols={4} className={classes.gridListMain}>
           {movies.map((movie) => (
-            <Link to={`/movie/${movie.id}`} key={movie.id}>
-              <ImageListItem
-                key={movie.id}
-                cols={1}
-                min-width="350"
-                onClick={() => movieClickHandler(movie.id)}
-              >
-                <img src={movie.poster_url} alt={movie.title} />
-                <ImageListItemBar title={movie.title} 
-                  subtitle={<span>Release Date: {new Date(movie.release_date).toDateString()}</span>}
-                />
-              </ImageListItem>
-            </Link>
+            <ImageListItem
+              className="grid-item"
+              key={movie.id}
+              cols={1}
+              min-width="350"
+              onClick={() => movieClickHandler(movie.id)}
+            >
+              <img
+                src={movie.poster_url}
+                alt={movie.title}
+                className="movie-img"
+              />
+              <ImageListItemBar
+                title={movie.title}
+                subtitle={
+                  <span>
+                    Release Date: {new Date(movie.release_date).toDateString()}
+                  </span>
+                }
+              />
+            </ImageListItem>
           ))}
         </ImageList>
       </div>
       <div className="right">
         <Card>
           <CardContent>
-            <FormControl>
+            <FormControl className={classes.formControl}>
               <Typography className={classes.title} color="textSecondary">
                 FIND MOVIES BY:
               </Typography>
             </FormControl>
-            <FormControl>
+            <FormControl className={classes.formControl}>
               <InputLabel htmlFor="movieName"> Movie Name </InputLabel>
               <Input id="movieName" onChange={handleMovieNameChange} />
             </FormControl>
             <br />
-            <FormControl>
+            <FormControl className={classes.formControl}>
               <InputLabel htmlFor="select-multiple-checkbox"> Genre</InputLabel>
               <Select
                 multiple
@@ -208,7 +211,7 @@ const ReleasedMovies = (props) => {
               </Select>
             </FormControl>
             <br />
-            <FormControl>
+            <FormControl className={classes.formControl}>
               <InputLabel htmlFor="select-multiple-checkbox">
                 Artists
               </InputLabel>

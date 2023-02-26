@@ -18,7 +18,10 @@ export function loginReducer(state = initialState, action) {
     case "LOGOUT_USER":
       return { ...state, loginDetails: {}, openModal: false };
     case "ADD_REGISTERED_USERS":
-      return { ...state, registeredUsers: action.payload };
+      return {
+        ...state,
+        registeredUsers: [...state.registeredUsers, action.payload],
+      };
     default:
       return state;
   }
