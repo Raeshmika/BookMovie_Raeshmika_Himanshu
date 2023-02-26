@@ -11,21 +11,19 @@ import { useState } from "react";
 
 export const Header = (props) => {
   const loginDetails = useSelector((state) => state.login.loginDetails);
-  const showBookShowButton = useSelector(
-    (state) => state.common.showBookShowButton
-  );
+
   return (
     <Provider store={store}>
       <div className="header-div">
         <img src={logo} className="app-logo" alt="logo"></img>
         <div className="login-container">
-          {JSON.stringify(loginDetails) === "{}" && <Login />}
+          {JSON.stringify(loginDetails) === "{}" && <Login {...props} />}
         </div>
         <div className="login-container">
-          {JSON.stringify(loginDetails) !== "{}" && <Logout />}
+          {JSON.stringify(loginDetails) !== "{}" && <Logout {...props} />}
         </div>
         <div className="login-container">
-          {showBookShowButton && <BookshowLink {...props} />}
+          {props.showBookShowButton && <BookshowLink {...props} />}
         </div>
       </div>
     </Provider>

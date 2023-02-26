@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginAndRegisterModal = () => {
+const LoginAndRegisterModal = (props) => {
   const dispatch = useDispatch();
   const openModal = useSelector((state) => state.login.openModal);
 
@@ -43,8 +43,8 @@ const LoginAndRegisterModal = () => {
           <Tab label="Register" />
         </Tabs>
         <Box p={3}>
-          {tabIndex === 0 && <LoginFom />}
-          {tabIndex === 1 && <RegistrationForm />}
+          {tabIndex === 0 && <LoginFom {...props} />}
+          {tabIndex === 1 && <RegistrationForm {...props} />}
         </Box>
       </div>
     </Modal>

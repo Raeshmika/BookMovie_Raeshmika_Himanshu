@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegistrationForm = () => {
+const RegistrationForm = (props) => {
   const classes = useStyles();
 
   const [successMsg, setSuccessMsg] = useState("");

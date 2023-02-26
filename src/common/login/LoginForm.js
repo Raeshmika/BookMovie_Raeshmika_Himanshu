@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginFom = () => {
+const LoginFom = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
@@ -48,6 +48,9 @@ const LoginFom = () => {
       })
       .catch((err) => {
         console.log(`Error Occured! ${err.message}`);
+        /**
+         * This is a work around added to imitate the login functionality which is currently not working due to CORS error
+         */
         registeredUsers.map((user) => {
           if (
             user.username === data["username"] &&

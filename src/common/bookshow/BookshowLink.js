@@ -12,7 +12,8 @@ const BookshowLink = (props) => {
     if (JSON.stringify(loginDetails) === "{}") {
       dispatch({ type: "OPEN_CLOSE_MODAL", payload: true });
     } else {
-      history.push(`/bookshow/${props.match.params.id}`);
+      console.log(props);
+      history.push(`/bookshow/${props.id}`);
     }
   };
 
