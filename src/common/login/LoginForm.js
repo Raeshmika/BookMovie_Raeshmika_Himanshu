@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, FormControl } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -32,6 +33,8 @@ const LoginFom = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
+  const [successMsg, setSuccessMsg] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const registeredUsers = useSelector((state) => state.login.registeredUsers);
 
   const loginUSer = (data) => {
@@ -45,6 +48,10 @@ const LoginFom = (props) => {
       .then((res) => {
         dispatch({ type: "SET_LOGIN_DATA", paylod: res.json() });
         history.push("/");
+        if(!res.ok){
+          setLoginSuccess(false)
+          setSuccessMsg("Incorrect Username Or Password!");
+        }
       })
       .catch((err) => {
         console.log(`Error Occured! ${err.message}`);
@@ -58,6 +65,10 @@ const LoginFom = (props) => {
           ) {
             dispatch({ type: "SET_LOGIN_DATA", payload: user });
             history.push("/");
+            setLoginSuccess(true)
+          } else {
+            setLoginSuccess(false)
+            setSuccessMsg("Incorrect Username Or Password!");
           }
         });
       });
@@ -71,11 +82,11 @@ const LoginFom = (props) => {
     for (let [name, value] of formData.entries()) {
       data[name] = value;
     }
-    console.log(data);
     loginUSer(data);
   };
 
   return (
+    <div>
     <form onSubmit={handleLogin}>
       <FormControl className={classes.formControl}>
         <TextField
@@ -103,6 +114,8 @@ const LoginFom = (props) => {
         Login
       </Button>
     </form>
+      {!loginSuccess && <div>{successMsg}</div>}
+    </div>
   );
 };
 
